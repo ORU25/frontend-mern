@@ -37,8 +37,8 @@ const Register = () => {
       </div>
       <Card className="p-8">
         <CardBody>
-          <h2 className="text-xl font-bold text-danger-500">Create Account</h2>
-          <p className="text-small mb-4">
+          <h2 className="text-2xl font-bold text-danger-500">Create Account</h2>
+          <p className="text-small mt-2 mb-4">
             Have an account? &nbsp;
             <Link
               href={"/auth/login"}
@@ -48,7 +48,7 @@ const Register = () => {
             </Link>
           </p>
 
-          {errors.root && (
+          {errors && (
             <p className="mb-2 font-medium text-danger">
               {errors?.root?.message}
             </p>

@@ -1,4 +1,5 @@
 import { LIMIT_LISTS } from "@/constans/list.constant";
+import useChangeUrl from "@/hooks/useChangeUrl";
 import { cn } from "@/utils/cn";
 import {
   Button,
@@ -14,44 +15,41 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/react";
-import { on } from "events";
-import { div } from "framer-motion/client";
-import { ChangeEvent, Key, ReactNode, useMemo } from "react";
+
+import {  Key, ReactNode, useMemo } from "react";
 import { CiSearch } from "react-icons/ci";
 
 interface PropTypes {
   buttonTopContentLabel?: string;
-  currentPage: number;
   columns: Record<string, unknown>[];
   data: Record<string, unknown>[];
   totalPages: number;
-  limit: string;
   isLoading?: boolean;
   emptyContent: string;
   renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
-  onChangeLimit: (e: ChangeEvent<HTMLSelectElement>) => void;
-  onChangePage: (page: number) => void;
-  onClearSearch: () => void;
-  onChangeSearch: (e: ChangeEvent<HTMLInputElement>) => void;
   onClickButtonTopContent?: () => void;
 }
 
 const DataTable = (props: PropTypes) => {
   const {
+    currentLimit,
+    currentPage,
+
+    handleChangeLimit,
+    handleChangePage,
+    handleSearch,
+    handleClearSearch,
+  } = useChangeUrl();
+
+  const {
     buttonTopContentLabel,
     columns,
     data,
-    limit,
     emptyContent,
     isLoading,
     renderCell,
-    onClearSearch,
-    onChangeLimit,
-    onChangeSearch,
     onClickButtonTopContent,
     totalPages,
-    currentPage,
-    onChangePage,
   } = props;
 
   const TopContent = useMemo(() => {
@@ -62,8 +60,8 @@ const DataTable = (props: PropTypes) => {
           className="w-full sm:max-w-[24%]"
           placeholder="Search by name"
           startContent={<CiSearch />}
-          onClear={onClearSearch}
-          onChange={onChangeSearch}
+          onClear={handleClearSearch}
+          onChange={handleSearch}
         />
         {buttonTopContentLabel && (
           <Button color="danger" onPress={onClickButtonTopContent}>
@@ -74,8 +72,8 @@ const DataTable = (props: PropTypes) => {
     );
   }, [
     buttonTopContentLabel,
-    onChangeSearch,
-    onClearSearch,
+    handleSearch,
+    handleClearSearch,
     onClickButtonTopContent,
   ]);
 
@@ -85,9 +83,9 @@ const DataTable = (props: PropTypes) => {
         <Select
           className="hidden max-w-36 lg:block"
           size="md"
-          selectedKeys={[limit]}
+          selectedKeys={[`${currentLimit}`]}
           selectionMode="single"
-          onChange={onChangeLimit}
+          onChange={handleChangeLimit}
           startContent={<p className="text-small">Show:</p>}
           disallowEmptySelection
         >
@@ -100,15 +98,15 @@ const DataTable = (props: PropTypes) => {
             isCompact
             showControls
             color="danger"
-            page={currentPage}
+            page={Number(currentPage)}
             total={totalPages}
-            onChange={onChangePage}
+            onChange={handleChangePage}
             loop
           />
         )}
       </div>
     );
-  }, [limit, onChangeLimit, currentPage, totalPages, onChangePage]);
+  }, [currentLimit, handleChangeLimit, currentPage, totalPages, handleChangePage]);
 
   return (
     <Table
@@ -116,10 +114,10 @@ const DataTable = (props: PropTypes) => {
       topContentPlacement="outside"
       bottomContent={BottomContent}
       bottomContentPlacement="outside"
-      classNames={{ 
+      classNames={{
         base: "max-w-full",
-        wrapper: cn({"overflow-x-hidden": isLoading})
-       }}
+        wrapper: cn({ "overflow-x-hidden": isLoading }),
+      }}
     >
       <TableHeader columns={columns}>
         {(column) => (
@@ -132,9 +130,11 @@ const DataTable = (props: PropTypes) => {
         items={data}
         emptyContent={emptyContent}
         isLoading={isLoading}
-        loadingContent={<div className="flex h-full w-full items-center justify-center bg-foreground-700/30 backdrop-blur-sm">
-            <Spinner color="danger"/>
-        </div>}
+        loadingContent={
+          <div className="flex h-full w-full items-center justify-center bg-foreground-700/30 backdrop-blur-sm">
+            <Spinner color="danger" />
+          </div>
+        }
       >
         {(item) => (
           <TableRow key={item._id as Key}>

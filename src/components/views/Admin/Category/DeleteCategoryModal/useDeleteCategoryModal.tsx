@@ -2,7 +2,6 @@ import { ToasterContext } from "@/contexts/ToasterContext";
 import categoryServices from "@/services/category.service";
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import { set } from "react-hook-form";
 
 const useDeleteCategoryModal = () => {
   const { setToaster } = useContext(ToasterContext);

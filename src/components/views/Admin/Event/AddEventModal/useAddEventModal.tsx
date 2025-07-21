@@ -6,23 +6,22 @@ import categoryServices from "@/services/category.service";
 import eventServices from "@/services/event.service";
 import { IEvent, IEventForm } from "@/types/Event";
 import { toDateStandard } from "@/utils/date";
-import { DateValue } from "@heroui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { getLocalTimeZone, now } from "@internationalized/date";
+import { DateValue, getLocalTimeZone, now } from "@internationalized/date";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please input name"),
   slug: yup.string().required("Please input slug"),
   category: yup.string().required("Please select category"),
-  startDate: yup.mixed<DateValue>().required("Please input start date"),
-  endDate: yup.mixed<DateValue>().required("Please input end date"),
+  startDate: yup.mixed<DateValue | any>().required("Please input start date"),
+  endDate: yup.mixed<DateValue | any>().required("Please input end date"),
   description: yup.string().required("Please input description"),
-  isPublished: yup.string().required("Please select publish status"),
+  isPublish: yup.string().required("Please select publish status"),
   isFeatured: yup.string().required("Please select featured status"),
   isOnline: yup.string().required("Please select online status"),
   region: yup.string().required("Please select region"),
@@ -60,8 +59,8 @@ const useAddEventModal = () => {
   const preview = watch("banner");
   const fileUrl = getValues("banner");
 
-  setValue('startDate', now(getLocalTimeZone()))
-  setValue('endDate', now(getLocalTimeZone()))
+  setValue("startDate", now(getLocalTimeZone()));
+  setValue("endDate", now(getLocalTimeZone()));
 
   const handleUploadBanner = (
     files: FileList,
@@ -131,22 +130,24 @@ const useAddEventModal = () => {
     },
   });
 
+  const parseBool = (val: any) => val === true || val === "true";
+
   const handleAddEvent = (data: IEventForm) => {
     const payload = {
       ...data,
-      isFeatured: Boolean(data.isFeatured),
-      isPublish: Boolean(data.isPublished),
-      isOnline: Boolean(data.isOnline),
-      startDate: toDateStandard(data.startDate),
-      endDate: toDateStandard(data.endDate),
+      isFeatured: parseBool(data.isFeatured),
+      isPublish: parseBool(data.isPublish),
+      isOnline: parseBool(data.isOnline),
+      startDate: data.startDate ? toDateStandard(data.startDate) : "",
+      endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {
-        region: data.region,
+        region: `${data.region}`,
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
       banner: data.banner,
     };
     mutateAddEvent(payload);
-  }; 
+  };
 
   return {
     control,

@@ -43,13 +43,13 @@ const AddEventModal = (props: PropTypes) => {
     handleUploadBanner,
     isPendingMutateUploadFile,
     handleDeleteBanner,
-    isPendingMutateDeleteFile, 
+    isPendingMutateDeleteFile,
     handleOnClose,
 
     dataCategory,
     dataRegion,
     searchRegency,
-    handleSearchregion
+    handleSearchregion,
   } = useAddEventModal();
 
   useEffect(() => {
@@ -137,10 +137,9 @@ const AddEventModal = (props: PropTypes) => {
                       label="Start Date"
                       variant="bordered"
                       hideTimeZone
-                      defaultValue={now(getLocalTimeZone())}
                       showMonthAndYearPickers
                       isInvalid={errors.startDate !== undefined}
-                      errorMessage={errors.startDate?.message}
+                      errorMessage={`${errors.startDate?.message}`}
                     />
                   )}
                 />
@@ -153,23 +152,22 @@ const AddEventModal = (props: PropTypes) => {
                       label="End Date"
                       variant="bordered"
                       hideTimeZone
-                      defaultValue={now(getLocalTimeZone())}
                       showMonthAndYearPickers
                       isInvalid={errors.endDate !== undefined}
-                      errorMessage={errors.endDate?.message}
+                      errorMessage={`${errors.endDate?.message}`}
                     />
                   )}
                 />
                 <Controller
-                  name="isPublished"
+                  name="isPublish"
                   control={control}
                   render={({ field }) => (
                     <Select
                       {...field}
                       label="Status"
                       variant="bordered"
-                      isInvalid={errors.isPublished !== undefined}
-                      errorMessage={errors.isPublished?.message}
+                      isInvalid={errors.isPublish !== undefined}
+                      errorMessage={errors.isPublish?.message}
                       disallowEmptySelection
                     >
                       <SelectItem key="true">Publish</SelectItem>
@@ -200,7 +198,7 @@ const AddEventModal = (props: PropTypes) => {
                   render={({ field }) => (
                     <Select
                       {...field}
-                      label="Online / Offline" 
+                      label="Online / Offline"
                       variant="bordered"
                       isInvalid={errors.isOnline !== undefined}
                       errorMessage={errors.isOnline?.message}

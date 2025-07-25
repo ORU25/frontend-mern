@@ -16,7 +16,7 @@ import {
   TableRow,
 } from "@heroui/react";
 
-import {  Key, ReactNode, useMemo } from "react";
+import { Key, ReactNode, useMemo } from "react";
 import { CiSearch } from "react-icons/ci";
 
 interface PropTypes {
@@ -28,6 +28,8 @@ interface PropTypes {
   emptyContent: string;
   renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
   onClickButtonTopContent?: () => void;
+  showLimit?: boolean;
+  showSearch?: boolean;
 }
 
 const DataTable = (props: PropTypes) => {
@@ -50,19 +52,23 @@ const DataTable = (props: PropTypes) => {
     renderCell,
     onClickButtonTopContent,
     totalPages,
+    showLimit = true,
+    showSearch = true,
   } = props;
 
   const TopContent = useMemo(() => {
     return (
       <div className="flex flex-col-reverse items-start justify-between gap-y-4 lg:flex-row lg:items-center">
-        <Input
-          isClearable
-          className="w-full sm:max-w-[24%]"
-          placeholder="Search by name"
-          startContent={<CiSearch />}
-          onClear={handleClearSearch}
-          onChange={handleSearch}
-        />
+        {showSearch && (
+          <Input
+            isClearable
+            className="w-full sm:max-w-[24%]"
+            placeholder="Search by name"
+            startContent={<CiSearch />}
+            onClear={handleClearSearch}
+            onChange={handleSearch}
+          />
+        )}
         {buttonTopContentLabel && (
           <Button color="danger" onPress={onClickButtonTopContent}>
             {buttonTopContentLabel}
@@ -80,19 +86,21 @@ const DataTable = (props: PropTypes) => {
   const BottomContent = useMemo(() => {
     return (
       <div className="flex items-center justify-center lg:justify-between">
-        <Select
-          className="hidden max-w-36 lg:block"
-          size="md"
-          selectedKeys={[`${currentLimit}`]}
-          selectionMode="single"
-          onChange={handleChangeLimit}
-          startContent={<p className="text-small">Show:</p>}
-          disallowEmptySelection
-        >
-          {LIMIT_LISTS.map((item) => (
-            <SelectItem key={item.value}>{item.label}</SelectItem>
-          ))}
-        </Select>
+        {showLimit && (
+          <Select
+            className="hidden max-w-36 lg:block"
+            size="md"
+            selectedKeys={[`${currentLimit}`]}
+            selectionMode="single"
+            onChange={handleChangeLimit}
+            startContent={<p className="text-small">Show:</p>}
+            disallowEmptySelection
+          >
+            {LIMIT_LISTS.map((item) => (
+              <SelectItem key={item.value}>{item.label}</SelectItem>
+            ))}
+          </Select>
+        )}
         {totalPages > 1 && (
           <Pagination
             isCompact
@@ -106,7 +114,13 @@ const DataTable = (props: PropTypes) => {
         )}
       </div>
     );
-  }, [currentLimit, handleChangeLimit, currentPage, totalPages, handleChangePage]);
+  }, [
+    currentLimit,
+    handleChangeLimit,
+    currentPage,
+    totalPages,
+    handleChangePage,
+  ]);
 
   return (
     <Table

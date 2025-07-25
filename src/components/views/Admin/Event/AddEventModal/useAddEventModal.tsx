@@ -30,6 +30,7 @@ const schema = yup.object().shape({
   banner: yup
     .mixed<FileList | string>()
     .required("Please input banner of category"),
+  address: yup.string().required("Please input address"),
 });
 
 const useAddEventModal = () => {
@@ -141,6 +142,7 @@ const useAddEventModal = () => {
       startDate: data.startDate ? toDateStandard(data.startDate) : "",
       endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {
+        address: `${data.address}`,
         region: `${data.region}`,
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },

@@ -50,6 +50,7 @@ const LocationTab = (props: PropTypes) => {
     if (dataEvent) {
       setValueUpdateLocation("isOnline", `${dataEvent?.isOnline}`);
       setValueUpdateLocation("region", `${dataEvent?.location?.region}`);
+      setValueUpdateLocation("address", `${dataEvent?.location?.address}`);
       setValueUpdateLocation(
         "latitude",
         `${dataEvent?.location?.coordinates?.[0]}`,
@@ -105,6 +106,26 @@ const LocationTab = (props: PropTypes) => {
             />
           </Skeleton>
           <Skeleton
+            isLoaded={!!dataEvent?.location?.address}
+            className="rounded-lg"
+          >
+            <Controller
+              name="address"
+              control={controlUpdateLocation}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  label="Address"
+                  variant="bordered"
+                  type="text"
+                  labelPlacement="outside"
+                  isInvalid={errorsUpdateLocation.address !== undefined}
+                  errorMessage={errorsUpdateLocation.address?.message}
+                />
+              )}
+            />
+          </Skeleton>
+          <Skeleton
             isLoaded={!!dataEvent?.location?.coordinates?.[0]}
             className="rounded-lg"
           >
@@ -114,7 +135,7 @@ const LocationTab = (props: PropTypes) => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  label="Slug"
+                  label="Latitude"
                   variant="bordered"
                   type="text"
                   labelPlacement="outside"
@@ -134,7 +155,7 @@ const LocationTab = (props: PropTypes) => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  label="Slug"
+                  label="Longitude"
                   variant="bordered"
                   type="text"
                   labelPlacement="outside"

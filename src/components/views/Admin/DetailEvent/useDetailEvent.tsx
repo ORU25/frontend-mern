@@ -73,6 +73,7 @@ const useDetailEvent = () => {
     const payload = {
       isOnline: parseBool(data.isOnline),
       location: {
+        address: `${data.address}`,
         region: `${data.region}`,
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },

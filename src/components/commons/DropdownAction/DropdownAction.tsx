@@ -33,7 +33,7 @@ const DropdownAction = (props: PropTypes) => {
           className="text-danger-500"
           onPress={onPressButtonDelete}
         >
-          Delete Category
+          Delete
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>

@@ -8,15 +8,19 @@ import {
   CardHeader,
   useDisclosure,
 } from "@heroui/react";
-import { Fragment, Key, ReactNode, useCallback } from "react";
+import { Fragment, Key, ReactNode, useCallback, useState } from "react";
 import { COLUMN_LIST_TICKET } from "./TicketTab.constant";
 import useTIcketTab from "./useTicketTab";
 import AddTicketModal from "./AddTicketModal";
+import DeleteTicketModal from "./DeleteTicketModal";
+import { ITicket } from "@/types/TIcket";
 
 const TicketTab = () => {
   const addTicketModal = useDisclosure();
   const deleteTicketModal = useDisclosure();
   const updateTicketModal = useDisclosure();
+
+  const [selectedDataTicket, setSelectedDataTicket] = useState<ITicket | null>(null);
 
   const { dataTicket, refetchTicket, isPendingTicket, isRefetchingTicket } = useTIcketTab();
 
@@ -33,6 +37,8 @@ const TicketTab = () => {
                 updateTicketModal.onOpen();
               }}
               onPressButtonDelete={() => {
+                setSelectedDataTicket(ticket as ITicket);
+                console.log(ticket);
                 deleteTicketModal.onOpen();
               }}
             />
@@ -54,7 +60,9 @@ const TicketTab = () => {
               Manage ticket of this event
             </p>
           </div>
-          <Button color="danger" onPress={addTicketModal.onOpen}>Add New Ticket</Button>
+          <Button color="danger" onPress={addTicketModal.onOpen}>
+            Add New Ticket
+          </Button>
         </CardHeader>
         <CardBody className="pt-0">
           <DataTable
@@ -70,6 +78,12 @@ const TicketTab = () => {
         </CardBody>
       </Card>
       <AddTicketModal {...addTicketModal} refecthTicket={refetchTicket} />
+      <DeleteTicketModal
+        {...deleteTicketModal}
+        selectedDataTicket={selectedDataTicket}
+        setSelectedDataTicket={setSelectedDataTicket}
+        refecthTicket={refetchTicket}
+      />
     </Fragment>
   );
 };

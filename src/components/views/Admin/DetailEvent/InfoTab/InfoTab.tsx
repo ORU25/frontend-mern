@@ -171,8 +171,7 @@ const InfoTab = (props: PropTypes) => {
               )}
             />
           </Skeleton>
-          <Skeleton
-            isLoaded={dataEvent?.isPublish !== undefined}
+          <Skeleton isLoaded={dataEvent?.isPublish !== undefined}
             className="rounded-lg"
           >
             <Controller
@@ -183,6 +182,7 @@ const InfoTab = (props: PropTypes) => {
                   {...field}
                   label="Status"
                   variant="bordered"
+                  labelPlacement="outside"
                   isInvalid={errorsUpdateInfo.isPublish !== undefined}
                   errorMessage={`${errorsUpdateInfo.isPublish?.message}`}
                   disallowEmptySelection
@@ -196,8 +196,7 @@ const InfoTab = (props: PropTypes) => {
               )}
             />
           </Skeleton>
-          <Skeleton
-            isLoaded={!!dataEvent?.isFeatured !== undefined}
+          <Skeleton isLoaded={!!dataEvent?.isFeatured !== undefined}
             className="rounded-lg"
           >
             <Controller
@@ -208,6 +207,7 @@ const InfoTab = (props: PropTypes) => {
                   {...field}
                   label="Featured"
                   variant="bordered"
+                  labelPlacement="outside"
                   isInvalid={errorsUpdateInfo.isFeatured !== undefined}
                   errorMessage={`${errorsUpdateInfo.isFeatured?.message}`}
                   disallowEmptySelection

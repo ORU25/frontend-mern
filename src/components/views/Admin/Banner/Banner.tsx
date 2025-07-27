@@ -34,8 +34,8 @@ const Banner = () => {
   }, [isReady]);
 
   const renderCell = useCallback(
-    (Banner: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = Banner[columnKey as keyof typeof Banner];
+    (banner: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = banner[columnKey as keyof typeof banner];
       switch (columnKey) {
         case "image":
           return (
@@ -55,10 +55,10 @@ const Banner = () => {
           return (
             <DropdownAction
               onPressButtonDetail={() =>
-                push(`/admin/Banner/${Banner._id}`)
+                push(`/admin/banner/${banner._id}`)
               }
               onPressButtonDelete={() => {
-                setSelectedId(`${Banner._id}`);
+                setSelectedId(`${banner._id}`);
                 deleteBannerModal.onOpen();
               }}
             />

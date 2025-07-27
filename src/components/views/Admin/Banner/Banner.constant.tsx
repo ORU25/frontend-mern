@@ -4,7 +4,7 @@ const COLUMN_LIST_BANNER = [
     uid: "image",
   },
   {
-    name: "title",
+    name: "TITLE",
     uid: "title",
   },
   {

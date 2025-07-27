@@ -38,9 +38,17 @@ const Banner = () => {
       const cellValue = banner[columnKey as keyof typeof banner];
       switch (columnKey) {
         case "image":
-          return (
-            <Image src={`${cellValue}`} alt="image" width={300} height={200} className="rounded-lg"/>
-          );
+          if (typeof cellValue === "string" && cellValue) {
+            return (
+              <Image
+                src={`${cellValue}`}
+                alt="image"
+                width={300}
+                height={200}
+                className="rounded-lg"
+              />
+            );
+          }
         case "isShow":
           return (
             <Chip
@@ -54,9 +62,7 @@ const Banner = () => {
         case "actions":
           return (
             <DropdownAction
-              onPressButtonDetail={() =>
-                push(`/admin/banner/${banner._id}`)
-              }
+              onPressButtonDetail={() => push(`/admin/banner/${banner._id}`)}
               onPressButtonDelete={() => {
                 setSelectedId(`${banner._id}`);
                 deleteBannerModal.onOpen();

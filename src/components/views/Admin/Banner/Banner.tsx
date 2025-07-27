@@ -8,6 +8,7 @@ import DropdownAction from "@/components/commons/DropdownAction";
 import useBanner from "./useBanner";
 import { COLUMN_LIST_BANNER } from "./Banner.constant";
 import AddBannerModal from "./AddBannerModal";
+import DeleteBannerModal from "./DeleteBannerModal/DeleteBannerModal";
 
 const Banner = () => {
   const { push, isReady, query } = useRouter();
@@ -33,8 +34,8 @@ const Banner = () => {
   }, [isReady]);
 
   const renderCell = useCallback(
-    (category: Record<string, unknown>, columnKey: Key) => {
-      const cellValue = category[columnKey as keyof typeof category];
+    (Banner: Record<string, unknown>, columnKey: Key) => {
+      const cellValue = Banner[columnKey as keyof typeof Banner];
       switch (columnKey) {
         case "image":
           return (
@@ -54,10 +55,10 @@ const Banner = () => {
           return (
             <DropdownAction
               onPressButtonDetail={() =>
-                push(`/admin/category/${category._id}`)
+                push(`/admin/Banner/${Banner._id}`)
               }
               onPressButtonDelete={() => {
-                setSelectedId(`${category._id}`);
+                setSelectedId(`${Banner._id}`);
                 deleteBannerModal.onOpen();
               }}
             />
@@ -83,8 +84,11 @@ const Banner = () => {
           totalPages={dataBanner?.pagination?.totalPages}
         />
       )}
-      <AddBannerModal
-        {...addBannerModal}
+      <AddBannerModal {...addBannerModal} refecthBanner={refetchBanner} />
+      <DeleteBannerModal
+        {...deleteBannerModal}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
         refecthBanner={refetchBanner}
       />
     </section>

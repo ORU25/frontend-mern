@@ -1,3 +1,3 @@
-import UpdateTicketModal from "./uPDATETicketModal";
+import UpdateTicketModal from "./UpdateTicketModal";
 
 export default UpdateTicketModal;

@@ -38,6 +38,7 @@ const AddEventModal = (props: PropTypes) => {
     handleAddEvent,
     isPendingMutateAddEvent,
     isSuccessMutateAddEvent,
+    setValue,
 
     preview,
     handleUploadBanner,
@@ -58,6 +59,11 @@ const AddEventModal = (props: PropTypes) => {
       refecthEvent();
     }
   }, [isSuccessMutateAddEvent]);
+
+  useEffect(() => {
+    setValue("startDate", now(getLocalTimeZone()));
+    setValue("endDate", now(getLocalTimeZone()));
+  }, [onOpenChange]);
 
   const disabledSubmit =
     isPendingMutateAddEvent ||
@@ -192,23 +198,7 @@ const AddEventModal = (props: PropTypes) => {
                     </Select>
                   )}
                 />
-                <Controller
-                  name="isOnline"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      label="Online / Offline"
-                      variant="bordered"
-                      isInvalid={errors.isOnline !== undefined}
-                      errorMessage={errors.isOnline?.message}
-                      disallowEmptySelection
-                    >
-                      <SelectItem key="true">Online</SelectItem>
-                      <SelectItem key="false">Offline</SelectItem>
-                    </Select>
-                  )}
-                />
+
                 <Controller
                   name="description"
                   control={control}
@@ -227,6 +217,24 @@ const AddEventModal = (props: PropTypes) => {
               <p className="text-sm font-bold">Location</p>
 
               <div className="flex flex-col gap-4 mb-4">
+                <Controller
+                  name="isOnline"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      label="Online / Offline"
+                      variant="bordered"
+                      isInvalid={errors.isOnline !== undefined}
+                      errorMessage={errors.isOnline?.message}
+                      disallowEmptySelection
+                    >
+                      <SelectItem key="true">Online</SelectItem>
+                      <SelectItem key="false">Offline</SelectItem>
+                    </Select>
+                  )}
+                />
+
                 <Controller
                   name="region"
                   control={control}

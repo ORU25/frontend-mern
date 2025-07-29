@@ -7,7 +7,7 @@ import eventServices from "@/services/event.service";
 import { IEvent, IEventForm } from "@/types/Event";
 import { toDateStandard } from "@/utils/date";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DateValue, getLocalTimeZone, now } from "@internationalized/date";
+import { DateValue } from "@internationalized/date";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -59,9 +59,6 @@ const useAddEventModal = () => {
 
   const preview = watch("banner");
   const fileUrl = getValues("banner");
-
-  setValue("startDate", now(getLocalTimeZone()));
-  setValue("endDate", now(getLocalTimeZone()));
 
   const handleUploadBanner = (
     files: FileList,
@@ -159,6 +156,7 @@ const useAddEventModal = () => {
     handleAddEvent,
     isPendingMutateAddEvent,
     isSuccessMutateAddEvent,
+    setValue,
 
     preview,
     handleUploadBanner,

@@ -10,7 +10,7 @@ const useLandingPageLayoutNavbar = () => {
   };
 
   const { data: dataProfile } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["Profile"],
     queryFn: getProfile,
     enabled: router.isReady,
   });

@@ -24,7 +24,7 @@ const useBanner = () => {
     isRefetching: isRefetchingBanner,
     refetch: refetchBanner,
   } = useQuery({
-    queryKey: ["Categories", currentLimit, currentPage, currentSearch],
+    queryKey: ["Banners", currentLimit, currentPage, currentSearch],
     queryFn: () => getBanners(),
     enabled: router.isReady && !!currentPage && !!currentLimit,
   });

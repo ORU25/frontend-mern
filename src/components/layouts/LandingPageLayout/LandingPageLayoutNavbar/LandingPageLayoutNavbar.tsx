@@ -31,10 +31,11 @@ const LandingPageLayoutNavbar = () => {
 
   const { dataProfile } = useLandingPageLayoutNavbar();
 
+
   return (
     <Navbar
       maxWidth="full"
-      className="max-w-screen-3xl 3xl:container py-3"
+      className="py-3"
       isBordered
       isBlurred={false}
       shouldHideOnScroll

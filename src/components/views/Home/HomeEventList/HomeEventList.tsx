@@ -15,7 +15,7 @@ const HomeEventList = (props: PropTypes) => {
     <section className="mb-16">
       <div className="mb-2 flex items-center justify-between px-6 lg:px-0">
         <h2 className="text-2xl font-bold text-danger">{title}</h2>
-        <Link href="/events" className="text-semibold text-foreground-500">
+        <Link href="/event" className="text-semibold text-foreground-500">
           see more
         </Link>
       </div>

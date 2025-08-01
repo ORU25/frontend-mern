@@ -17,12 +17,12 @@ const HomeCategoryList = (props: PropTypes) => {
       </CardHeader>
       <CardBody className="mt-4 p-0">
         <div className="grid auto-cols-[8rem] grid-flow-col gap-4 overflow-x-auto lg:grid-cols-8 ">
-          {!isLoading
-            ? categories?.map((category) => (
+          {!isLoading && categories ? 
+            categories?.map((category) => (
                 <Link
                   className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border p-4"
                   key={`category-${category._id}`}
-                  href={`/events?category=${category._id}`}
+                  href={`/event?category=${category._id}`}
                 >
                   <Image
                     src={`${category.icon}`}

@@ -16,6 +16,7 @@ const Home = () => {
     dataCategories,
     isLoadingCategories,
   } = useHome();
+
   return (
     <div>
       <HomeSlider
@@ -26,6 +27,7 @@ const Home = () => {
         title="Featured Events"
         events={dataFeturedEvent?.data}
         isLoading={isLoadingFeturedEvent}
+        urlMore="/event?isFeatured=true"
       />
       <Skeleton
         isLoaded={!isLoadingBanner}

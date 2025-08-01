@@ -5,24 +5,26 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import EventFooter from "./EventFooter";
+import EventFilter from "./EventFilter";
+import Image from "next/image";
 
 const Event = () => {
   const router = useRouter();
 
   const { dataEvents, isLoadingEvents, isRefetchingEvents, refetchEvents } = useEvent();
 
-  const { setUrl } = useChangeUrl();
+  const { setUrlExplore } = useChangeUrl();
 
   useEffect(() => {
     if (router.isReady) {
-      setUrl();
+      setUrlExplore();
     }
   }, [router.isReady]);
 
   return (
     <div className="flex flex-col justify-center w-full gap-6 px-4 lg:flex-row lg:px-0">
-      <div className="w-full lg:w-80">Filter</div>
-      <div className="min-h-[70vh] w-fit flex-1">
+      <EventFilter/>
+      <div className="min-h-[70vh] w-full flex-1">
         <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {!isLoadingEvents && !isRefetchingEvents
             ? dataEvents?.data?.map((event: IEvent) => (
@@ -32,12 +34,19 @@ const Event = () => {
                 <CardEvent
                   key={`card-event-loading-${index}`}
                   isLoading={true}
-                  className="first:ml-6 last:mr-6 lg:first:ml-0 lg:last:mr-0"
                 />
               ))}
         </div>
         {!isLoadingEvents && dataEvents?.data.length > 0  && (
             <EventFooter totalPages={dataEvents?.pagination?.totalPages}/>
+        )}
+        {dataEvents?.data?.length < 1 && !isLoadingEvents && !isRefetchingEvents && (
+          <div className="flex flex-col items-center justify-center gap-4 py-20">
+            <Image src="/images/ilustrations/no-data.svg" alt="no-data" width={200} height={200} className="rounded-none"/>
+            <h2 className="text-center text-2xl font-bold text-danger">
+              Event is empty
+            </h2>
+          </div>
         )}
       </div>
     </div>

@@ -1,17 +1,39 @@
-import { BreadcrumbItem, Breadcrumbs, Skeleton, Tab, Tabs } from "@heroui/react";
+import {
+  BreadcrumbItem,
+  Breadcrumbs,
+  Skeleton,
+  Tab,
+  Tabs,
+} from "@heroui/react";
 import useDetailEvent from "./useDetailEvent";
 import { FaClock, FaLocationDot } from "react-icons/fa6";
 import { convertTime } from "@/utils/date";
 import Image from "next/image";
 import { ITicket } from "@/types/TIcket";
 import DetailEventTicket from "./DetailEventTicket";
+import DetailEventCart from "./DetailEventCart";
+import Script from "next/script";
+import environment from "@/config/environment";
 
 const DetailEvent = () => {
-  const { dataEvent, isLoadingEvent, dataTicket, isLoadingTicket } =
-    useDetailEvent();
+  const {
+    dataEvent,
+    dataTicket,
+    handleAddToCart,
+    handleChangeQuantity,
+    cart,
+    dataTicketInCart,
+    mutateCreateOrder,
+    isPendingMutateCreateOrder,
+  } = useDetailEvent();
 
   return (
     <div className="px-8 md:px-0">
+      <Script
+        src={environment.MIDTRANS_SNAP_URL}
+        data-client-key={environment.MIDTRANS_CLIENT_KEY}
+        strategy="lazyOnload"
+      />
       <Skeleton isLoaded={!!dataEvent?.name} className="h-6 w-1/4 rounded-lg">
         <Breadcrumbs>
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
@@ -74,7 +96,10 @@ const DetailEvent = () => {
               <h2 className="text-xl font-semibold text-foreground-700">
                 About Event
               </h2>
-              <Skeleton isLoaded={!!dataEvent?.description} className="h-32 w-full rounded-lg mt-2">
+              <Skeleton
+                isLoaded={!!dataEvent?.description}
+                className="h-32 w-full rounded-lg mt-2"
+              >
                 <p className="text-foreground-500">{dataEvent?.description}</p>
               </Skeleton>
             </Tab>
@@ -83,12 +108,27 @@ const DetailEvent = () => {
                 Ticket
               </h2>
               <div className="mt-4 flex flex-col gap-8">
-                {dataTicket?.map((ticket: ITicket) => <DetailEventTicket key={`${ticket._id}`} ticket={ticket}/>)}
+                {dataTicket?.map((ticket: ITicket) => (
+                  <DetailEventTicket
+                    key={`${ticket._id}`}
+                    ticket={ticket}
+                    cart={cart}
+                    handleAddToCart={() => handleAddToCart(`${ticket._id}`)}
+                  />
+                ))}
               </div>
             </Tab>
           </Tabs>
         </div>
-        <div className="w-full lg:w-2/6"></div>
+        <div className="w-full lg:w-2/6">
+          <DetailEventCart
+            cart={cart}
+            dataTicketInCart={dataTicketInCart}
+            onChangeQuantity={handleChangeQuantity}
+            onCreateOrder={mutateCreateOrder}
+            isLoading={isPendingMutateCreateOrder}
+          />
+        </div>
       </section>
     </div>
   );

@@ -28,7 +28,7 @@ const SIDEBAR_ADMIN = [
   {
     key: "transactions",
     label: "Transactions",
-    href: "/admin/transactions",
+    href: "/admin/transaction",
     icon: <CiWallet />,
   },
 ];
@@ -37,7 +37,7 @@ const SIDEBAR_MEMBER = [
   {
     key: "dashboard",
     label: "Dashboard",
-    href: "/member",
+    href: "/member/dashboard",
     icon: <CiGrid41 />,
   },
   {
@@ -49,7 +49,7 @@ const SIDEBAR_MEMBER = [
   {
     key: "transactions",
     label: "Transactions",
-    href: "/member/transactions",
+    href: "/member/transaction",
     icon: <CiWallet />,
   },
 ];

@@ -92,7 +92,7 @@ const useDetailEvent = () => {
         const transactionToken = result.payment.token;
         (window as any).snap.pay(transactionToken, {
           onSuccess: () => {
-            window.location.href = `https://acara-frontend-mern.vercel.app//payment/success?order_id=${result.orderId}`;
+            window.location.href = `https://acara-frontend-mern.vercel.app/payment/success?orderId=${result.orderId}`;
           }
         })
       }

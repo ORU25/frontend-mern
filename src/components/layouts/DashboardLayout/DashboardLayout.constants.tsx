@@ -41,16 +41,16 @@ const SIDEBAR_MEMBER = [
     icon: <CiGrid41 />,
   },
   {
-    key: "setting",
-    label: "Setting",
-    href: "/member/setting",
-    icon: <CiSettings />,
-  },
-  {
     key: "transactions",
     label: "Transactions",
     href: "/member/transaction",
     icon: <CiWallet />,
+  },
+  {
+    key: "setting",
+    label: "Setting",
+    href: "/member/setting",
+    icon: <CiSettings />,
   },
 ];
 

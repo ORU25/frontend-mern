@@ -130,14 +130,20 @@ const LandingPageLayoutNavbar = () => {
               <DropdownMenu>
                 <DropdownItem
                   key="admin"
-                  href="/admin/dashboard"
+                  href="/admin/event"
                   className={cn({
                     hidden: dataProfile?.role !== "admin",
                   })}
                 >
                   Admin
                 </DropdownItem>
-                <DropdownItem key="profile" href="/member/profile">
+                <DropdownItem
+                  key="profile"
+                  href="/member/profile"
+                  className={cn({
+                    hidden: dataProfile?.role !== "member",
+                  })}
+                >
                   Profile
                 </DropdownItem>
                 <DropdownItem key="signout" onPress={() => signOut()}>
@@ -184,7 +190,7 @@ const LandingPageLayoutNavbar = () => {
             <Fragment>
               <NavbarMenuItem>
                 <Link
-                  href="/admin/dashboard"
+                  href="/admin/event"
                   className={cn(
                     "font-medium text-default-700 hover:text-danger",
                     { hidden: dataProfile?.role !== "admin" },
@@ -196,7 +202,10 @@ const LandingPageLayoutNavbar = () => {
               <NavbarMenuItem>
                 <Link
                   href="/member/profile"
-                  className="font-medium text-default-700 hover:text-danger"
+                  className={cn(
+                    "font-medium text-default-700 hover:text-danger",
+                    { hidden: dataProfile?.role !== "member" },
+                  )}
                 >
                   Profile
                 </Link>

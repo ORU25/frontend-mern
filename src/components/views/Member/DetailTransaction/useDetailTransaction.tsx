@@ -14,7 +14,7 @@ const useDetailTransaction = () => {
   };
 
   const { data: dataTransaction } = useQuery({
-    queryKey: ["Transaction"],
+    queryKey: ["Transaction", router.query.id],
     queryFn: getOrderById,
     enabled: router.isReady,
   });
@@ -25,9 +25,9 @@ const useDetailTransaction = () => {
   };
 
   const { data: dataEvent } = useQuery({
-    queryKey: ["EventById"],
+    queryKey: ["EventById", dataTransaction?.events],
     queryFn: getEventById,
-    enabled: !!dataTransaction?.events,
+    enabled: !!dataTransaction?.events && router.isReady,
   });
 
   const getTicketsById = async () => {
@@ -38,9 +38,9 @@ const useDetailTransaction = () => {
   };
 
   const { data: dataTicket } = useQuery({
-    queryKey: ["Tickets"],
+    queryKey: ["Tickets", dataTransaction?.ticket],
     queryFn: getTicketsById,
-    enabled: !!dataTransaction?.ticket,
+    enabled: !!dataTransaction?.ticket && router.isReady,
   });
 
   return {

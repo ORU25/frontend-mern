@@ -45,7 +45,7 @@ const useRegister = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
+    setValue
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
@@ -62,6 +62,11 @@ const useRegister = () => {
     },
     onSuccess: () => {
       reset();
+      setValue("fullname", "");
+      setValue("username", "");
+      setValue("email", "");
+      setValue("password", "");
+      setValue("confirmPassword", "");
       setToaster({ type: "success", message: "Register success" });
       router.push("/auth/register/success");
     },

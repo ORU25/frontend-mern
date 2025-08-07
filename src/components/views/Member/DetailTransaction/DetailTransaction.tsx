@@ -72,7 +72,7 @@ const DetailTransaction = () => {
             </div>
           </div>
         </div>
-        {dataTransaction?.status === "completed" && (
+        {dataTransaction?.status === "completed" ? (
           <div className="flex flex-col gap-2">
             <h4 className="font-bold">Ticket:</h4>
             <div className="flex flex-col gap-4 mt-2">
@@ -122,9 +122,22 @@ const DetailTransaction = () => {
               )}
             </div>
           </div>
+        ) : (
+          <div className="flex flex-col gap-2">
+            <h4 className="font-bold">Event:</h4>
+            {!dataEvent?.name ? (
+              <Skeleton
+                isLoaded={!!dataEvent?.name}
+                className="h-8 w-1/3 rounded-md"
+              ></Skeleton>
+            ) : (
+              <h2 className="text-2xl font-bold text-danger">
+                {dataEvent?.name}
+              </h2>
+            )}
+          </div>
         )}
         {dataTransaction?.status === "pending" && (
-            
           <Button
             color="danger"
             className="w-fit"

@@ -1,5 +1,4 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import DetailCategory from "@/components/views/Admin/DetailCategory";
 import DetailTransaction from "@/components/views/Member/DetailTransaction";
 
 const MemberDetailTransactionPage = () => {

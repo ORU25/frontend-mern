@@ -2,7 +2,7 @@ import { Tab, Tabs } from "@heroui/react";
 import PictureTab from "./PictureTab";
 import useProfile from "./useProfile";
 import InfoTab from "./InfoTab";
-import SecurityTab from "./InfoTab copy";
+import SecurityTab from "./SecurityTab";
 
 const Profile = () => {
   const {
@@ -31,7 +31,7 @@ const Profile = () => {
         />
       </Tab>
       <Tab key="security" title="Security">
-        <SecurityTab />
+        <SecurityTab/>
       </Tab>
     </Tabs>
   );

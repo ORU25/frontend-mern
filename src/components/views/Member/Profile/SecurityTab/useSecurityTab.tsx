@@ -4,7 +4,7 @@ import { IUpdatePassword } from "@/types/Auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import { set, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schemaUpdatePassword = yup.object().shape({
@@ -34,10 +34,10 @@ const useSecurityTab = () => {
 
   const {mutate: mutateUpdatePassword, isPending: isPendingUpdatePassword} = useMutation({
     mutationFn: (payload: IUpdatePassword) => updatePassword(payload),
-    onError: (error) => {
+    onError: (error : any) => {
       setToaster({
         type: "error",
-        message: error.message
+        message: error.response.data.meta.message
       })
     },
     onSuccess: () => {

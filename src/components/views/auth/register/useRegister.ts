@@ -58,7 +58,10 @@ const useRegister = () => {
   const { mutate: mutateRegister, isPending: isPendingRegister } = useMutation({
     mutationFn: registerService,
     onError: (error: any) => {
-      setToaster({ type: "error", message: error.message });
+      setToaster({
+        type: "error",
+        message: error.response.data.meta.message,
+      });
     },
     onSuccess: () => {
       reset();

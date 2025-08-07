@@ -1,5 +1,5 @@
 import DataTable from "@/components/ui/DataTable";
-import { Chip } from "@heroui/react";
+import { Chip, useDisclosure } from "@heroui/react";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect } from "react";
 import useChangeUrl from "@/hooks/useChangeUrl";
@@ -7,6 +7,7 @@ import DropdownAction from "@/components/commons/DropdownAction";
 import { COLUMN_LIST_TRANSACTION } from "./Transaction.constant";
 import useTransaction from "./useTransaction";
 import { convertIDR } from "@/utils/currency";
+import DeleteTransactionModal from "./DeleteTransactionModal";
 
 const Transaction = () => {
   const { push, isReady, query } = useRouter();
@@ -15,9 +16,13 @@ const Transaction = () => {
     isLoadingTransactions,
     isRefetchingTransactions,
     refetchTransactions,
+    selectedId,
+    setSelectedId,
   } = useTransaction();
 
   const { setUrl } = useChangeUrl();
+
+  const deleteTransactionModal = useDisclosure();
 
   useEffect(() => {
     if (isReady) {
@@ -32,7 +37,13 @@ const Transaction = () => {
         case "status":
           return (
             <Chip
-              color={cellValue === "completed" ? "success" : cellValue === "pending" ? "warning" : "danger"}
+              color={
+                cellValue === "completed"
+                  ? "success"
+                  : cellValue === "pending"
+                    ? "warning"
+                    : "danger"
+              }
               size="sm"
               variant="flat"
             >
@@ -47,7 +58,10 @@ const Transaction = () => {
               onPressButtonDetail={() =>
                 push(`/member/transaction/${transaction.orderId}`)
               }
-              hideButtonDelete
+              onPressButtonDelete={() => {
+                setSelectedId(`${transaction.orderId}`);
+                deleteTransactionModal.onOpen();
+              }}
             />
           );
         default:
@@ -69,6 +83,12 @@ const Transaction = () => {
           totalPages={dataTransactions?.pagination?.totalPages}
         />
       )}
+      <DeleteTransactionModal
+        {...deleteTransactionModal}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+        refecthTransactions={refetchTransactions}
+      />
     </section>
   );
 };

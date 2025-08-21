@@ -7,15 +7,15 @@ import { useEffect } from "react";
 const Payment = () => {
   const router = useRouter();
 
-  const { status, order_id } = router.query;
+  const { status, orderId } = router.query;
 
-  const { mutateUpdateOrderStatus } = usePayment();
+  // const { mutateUpdateOrderStatus } = usePayment();
 
-  useEffect(() => {
-    if (router.isReady) {
-      mutateUpdateOrderStatus();
-    }
-  }, [router.isReady]);
+  // useEffect(() => {
+  //   if (router.isReady) {
+  //     mutateUpdateOrderStatus();
+  //   }
+  // }, [router.isReady]);
 
   return (
     <div className="flex w-screen flex-col items-center justify-center gap-10 p-4">
@@ -47,7 +47,7 @@ const Payment = () => {
           className="mt-4 w-fit"
           color="danger"
           variant="bordered"
-          onPress={() => router.push(`/member/transaction/${order_id}`)}
+          onPress={() => router.push(`/member/transaction/${orderId}`)}
         >
           Check your transaction here
         </Button>

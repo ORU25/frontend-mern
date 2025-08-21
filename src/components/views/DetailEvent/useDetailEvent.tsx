@@ -90,11 +90,14 @@ const useDetailEvent = () => {
       },
       onSuccess: (result) => {
         const transactionToken = result.payment.token;
-        (window as any).snap.pay(transactionToken, {
+        (window as any).snap.pay(transactionToken
+          , {
           onSuccess: () => {
-            window.location.href = `https://acara-frontend-mern.vercel.app/payment/success?orderId=${result.orderId}`;
+            // window.location.href = `https://acara-frontend-mern.vercel.app/payment/success?orderId=${result.orderId}`;
+            window.location.href = `https://acara-frontend-mern.vercel.app/payment/success`;
           }
-        })
+        }
+        )
       }
     });
 
